@@ -1,0 +1,4 @@
+dtv.mgr         u:object_r:dtvserver_service:s0
+dtv.server      u:object_r:dtvserver_service:s0
+dtvbml.server   u:object_r:dtvserver_service:s0
+sd.service      u:object_r:dtvserver_service:s0

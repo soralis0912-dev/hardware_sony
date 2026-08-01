@@ -1,0 +1,10 @@
+binder_call(vendor_hal_digitaltv_client, vendor_hal_digitaltv_server)
+binder_call(vendor_hal_digitaltv_server, vendor_hal_digitaltv_client)
+
+add_hwservice(vendor_hal_digitaltv_server, vendor_hal_digitaltv_hwservice)
+
+allow vendor_hal_digitaltv_client vendor_hal_digitaltv_hwservice:hwservice_manager find;
+
+# dtvserver lives on /system, so it cannot carry a vendor attribute
+binder_call(dtvserver, vendor_hal_digitaltv_server)
+allow dtvserver vendor_hal_digitaltv_hwservice:hwservice_manager find;

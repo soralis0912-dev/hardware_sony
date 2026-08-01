@@ -1,0 +1,4 @@
+/data/dtv(/.*)?         u:object_r:dtv_data_file:s0
+
+/system/bin/dtvmgr      u:object_r:dtvserver_exec:s0
+/system/bin/dtvserver   u:object_r:dtvserver_exec:s0

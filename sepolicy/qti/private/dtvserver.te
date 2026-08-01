@@ -1,0 +1,54 @@
+init_daemon_domain(dtvserver)
+
+# The BML browser talks to the broadcaster over the data connection
+net_domain(dtvserver)
+
+binder_use(dtvserver)
+hwbinder_use(dtvserver)
+hal_client_domain(dtvserver, hal_allocator)
+
+add_service(dtvserver, dtvserver_service)
+
+binder_call(dtvserver, audioserver)
+binder_call(dtvserver, mediaserver)
+binder_call(dtvserver, priv_app)
+binder_call(dtvserver, surfaceflinger)
+binder_call(dtvserver, system_app)
+binder_call(dtvserver, system_server)
+
+allow dtvserver {
+    audioserver_service
+    mediametrics_service
+    mediaserver_service
+    surfaceflinger_service
+}:service_manager find;
+
+allow dtvserver hidl_memory_hwservice:hwservice_manager find;
+
+# Channel list and recorded programmes
+allow dtvserver dtv_data_file:dir create_dir_perms;
+allow dtvserver dtv_data_file:file create_file_perms;
+allow dtvserver system_data_file:dir { search setattr };
+
+# Recording to removable storage
+allow dtvserver media_rw_data_file:dir search;
+allow dtvserver mnt_user_file:dir search;
+allow dtvserver mnt_user_file:lnk_file read;
+allow dtvserver sdcard_type:dir create_dir_perms;
+allow dtvserver sdcard_type:file create_file_perms;
+allow dtvserver storage_file:dir search;
+allow dtvserver storage_file:lnk_file read;
+
+# Decoding and rendering
+allow dtvserver audio_device:dir search;
+allow dtvserver audio_device:chr_file rw_file_perms;
+allow dtvserver gpu_device:chr_file rw_file_perms;
+allow dtvserver ion_device:chr_file r_file_perms;
+allow dtvserver video_device:dir search;
+allow dtvserver video_device:chr_file rw_file_perms;
+
+allow dtvserver proc_uptime:file r_file_perms;
+allow dtvserver tmpfs:dir search;
+
+allow dtvserver self:capability { setgid setuid };
+allow dtvserver self:process execmem;

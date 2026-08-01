@@ -76,3 +76,6 @@ genfscon sysfs /devices/platform/soc/9c0000.qcom,qupv3_i2c_geni_se/984000.i2c/i2
 # UIM control node
 genfscon sysfs /class/sony_ext_uim_ctrl u:object_r:sysfs_uim_ctrl:s0
 genfscon sysfs /devices/virtual/sony_ext_uim_ctrl/device/ u:object_r:sysfs_uim_ctrl:s0
+
+# Digital TV
+genfscon sysfs /devices/mmtuner_pdev u:object_r:sysfs_tuner_pdev:s0

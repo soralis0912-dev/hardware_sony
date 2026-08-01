@@ -1,0 +1,12 @@
+type vendor_hal_tuner_default, domain;
+hal_server_domain(vendor_hal_tuner_default, vendor_hal_tuner)
+
+type vendor_hal_tuner_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_hal_tuner_default)
+
+hal_client_domain(vendor_hal_tuner_default, hal_allocator)
+
+allow vendor_hal_tuner_default hidl_memory_hwservice:hwservice_manager find;
+
+allow vendor_hal_tuner_default tuner_device:chr_file rw_file_perms;
+allow vendor_hal_tuner_default sysfs_tuner_pdev:file rw_file_perms;

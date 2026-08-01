@@ -1,0 +1,25 @@
+type vendor_hal_digitaltv_default, domain;
+hal_server_domain(vendor_hal_digitaltv_default, vendor_hal_digitaltv)
+
+type vendor_hal_digitaltv_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_hal_digitaltv_default)
+
+hal_client_domain(vendor_hal_digitaltv_default, hal_allocator)
+typeattribute vendor_hal_digitaltv_default vendor_hal_secd_client;
+
+allow vendor_hal_digitaltv_default hidl_memory_hwservice:hwservice_manager find;
+
+allow vendor_hal_digitaltv_default dtv_data_vendor_file:dir create_dir_perms;
+allow vendor_hal_digitaltv_default dtv_data_vendor_file:file create_file_perms;
+
+allow vendor_hal_digitaltv_default dtv_vendor_multimedia:dir search;
+allow vendor_hal_digitaltv_default dtv_vendor_multimedia:file r_file_perms;
+
+# tzfullseg, the fullseg descrambler trustlet
+allow vendor_hal_digitaltv_default vendor_firmware_file:dir search;
+allow vendor_hal_digitaltv_default vendor_firmware_file:file r_file_perms;
+
+allow vendor_hal_digitaltv_default ion_device:chr_file rw_file_perms;
+allow vendor_hal_digitaltv_default tee_device:chr_file rw_file_perms;
+
+unix_socket_connect(vendor_hal_digitaltv_default, tad, tad)
