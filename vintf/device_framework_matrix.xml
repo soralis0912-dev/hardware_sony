@@ -37,6 +37,14 @@
         </interface>
     </hal>
     <hal format="hidl" optional="true">
+        <name>vendor.semc.hardware.digitaltv.fullseg</name>
+        <version>1.0</version>
+        <interface>
+            <name>IFullseg</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
         <name>vendor.semc.hardware.display</name>
         <version>2.2-5</version>
         <interface>
@@ -59,6 +67,14 @@
         <name>vendor.semc.hardware.fingerprint</name>
         <interface>
             <name>IFingerprintDiagnostic</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.semc.hardware.isdbttuner</name>
+        <version>1.0</version>
+        <interface>
+            <name>IIsdbttuner</name>
             <instance>default</instance>
         </interface>
     </hal>
