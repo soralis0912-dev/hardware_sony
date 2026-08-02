@@ -1,5 +1,5 @@
 type dtv_data_vendor_file, file_type, data_file_type;
-type dtv_vendor_multimedia, file_type;
+type dtv_vendor_multimedia, vendor_file_type, file_type;
 type idd_crashdata_file, file_type;
 type idd_data_file, file_type;
 type idd_fsck_file, file_type;
