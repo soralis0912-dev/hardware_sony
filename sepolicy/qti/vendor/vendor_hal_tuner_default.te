@@ -9,4 +9,8 @@ hal_client_domain(vendor_hal_tuner_default, hal_allocator)
 allow vendor_hal_tuner_default hidl_memory_hwservice:hwservice_manager find;
 
 allow vendor_hal_tuner_default tuner_device:chr_file rw_file_perms;
+# Stock labels the individual attributes through odm_file_contexts and leaves
+# the directory as plain sysfs; genfs_contexts labels the whole subtree, so the
+# directory has to be searchable to reach power_ctrl.
+allow vendor_hal_tuner_default sysfs_tuner_pdev:dir search;
 allow vendor_hal_tuner_default sysfs_tuner_pdev:file rw_file_perms;

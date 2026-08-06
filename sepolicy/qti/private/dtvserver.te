@@ -1,7 +1,14 @@
 init_daemon_domain(dtvserver)
 
+# dtvserver forks and execs /system/bin/dtvmgr, which stays in this domain
+allow dtvserver dtvserver_exec:file execute_no_trans;
+
 # The BML browser talks to the broadcaster over the data connection
 net_domain(dtvserver)
+allow dtvserver self:capability { net_admin net_raw };
+allow dtvserver self:udp_socket ioctl;
+# SIOCGIFHWADDR sits in priv_sock_ioctls, which unpriv_sock_ioctls does not cover
+allowxperm dtvserver self:udp_socket ioctl { unpriv_sock_ioctls SIOCGIFHWADDR };
 
 binder_use(dtvserver)
 hwbinder_use(dtvserver)
@@ -10,18 +17,29 @@ hal_client_domain(dtvserver, hal_allocator)
 add_service(dtvserver, dtvserver_service)
 
 binder_call(dtvserver, audioserver)
+binder_call(dtvserver, dumpstate)
+binder_call(dtvserver, mediametrics)
 binder_call(dtvserver, mediaserver)
+binder_call(dtvserver, platform_app)
 binder_call(dtvserver, priv_app)
 binder_call(dtvserver, surfaceflinger)
 binder_call(dtvserver, system_app)
 binder_call(dtvserver, system_server)
 
 allow dtvserver {
+    audio_service
     audioserver_service
     mediametrics_service
     mediaserver_service
     surfaceflinger_service
 }:service_manager find;
+
+# AudioTrack calls back into dtvserver to ask for more data
+binder_call(audioserver, dtvserver)
+
+# Video output allocates and maps graphic buffers
+hal_client_domain(dtvserver, hal_graphics_allocator)
+allow dtvserver hal_graphics_mapper_hwservice:hwservice_manager find;
 
 allow dtvserver hidl_memory_hwservice:hwservice_manager find;
 
@@ -48,7 +66,24 @@ allow dtvserver video_device:dir search;
 allow dtvserver video_device:chr_file rw_file_perms;
 
 allow dtvserver proc_uptime:file r_file_perms;
+allow dtvserver rootfs:lnk_file getattr;
 allow dtvserver tmpfs:dir search;
+get_prop(dtvserver, vendor_mm_video_prop)
+
+# Broadcaster data shipped on the oem partition
+allow dtvserver oemfs:dir search;
+allow dtvserver oemfs:file r_file_perms;
+
+allow dtvserver kernel:system module_request;
+allow dtvserver sdcardd:fd use;
 
 allow dtvserver self:capability { setgid setuid };
 allow dtvserver self:process execmem;
+
+# Stock grants these to priv_app, where its FUJISOFT-signed FsDtvApp lands. Ours
+# is re-signed with the platform key -- it cannot be presigned, because a
+# privileged app has to ship uncompressed dex and the stock apk does not -- so
+# seapp_contexts puts it in platform_app instead.
+allow platform_app dtvserver_service:service_manager find;
+allow platform_app dtvserver_exec:file getattr;
+binder_call(platform_app, dtvserver)

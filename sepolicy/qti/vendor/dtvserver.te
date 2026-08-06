@@ -1,0 +1,4 @@
+# The tuner configuration under /vendor/etc/multimedia is encrypted, and dtvmgr
+# decrypts it through the secd HAL before libisdbttuner can initialise the chip.
+allow dtvserver vendor_hal_secd_hwservice:hwservice_manager find;
+binder_call(dtvserver, vendor_hal_secd_default)
