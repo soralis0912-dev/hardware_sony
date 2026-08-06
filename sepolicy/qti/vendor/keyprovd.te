@@ -19,3 +19,8 @@ allow keyprovd vendor_qce_device:chr_file rw_file_perms;
 
 get_prop(keyprovd, vendor_tee_listener_prop)
 get_prop(keyprovd, hwservicemanager_prop)
+
+# keyprovd asks secd for the suntory blob status, and waits on the property
+# secd sets once provisioning is done
+binder_call(keyprovd, vendor_hal_secd_default)
+get_prop(keyprovd, suntory_prop)

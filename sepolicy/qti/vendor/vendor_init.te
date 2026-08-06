@@ -16,3 +16,5 @@ set_prop(vendor_init, vendor_sdm_prop)
 # init.mm_tuner.rc hands power_ctrl to the tuner HAL, which runs as system
 allow vendor_init sysfs_tuner_pdev:dir search;
 allow vendor_init sysfs_tuner_pdev:file setattr;
+
+set_prop(vendor_init, suntory_prop)

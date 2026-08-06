@@ -17,3 +17,6 @@ allow vendor_hal_secd_default tee_device:chr_file rw_file_perms;
 
 get_prop(vendor_hal_secd_default, vendor_tee_listener_prop)
 set_prop(vendor_hal_secd_default, vendor_sdm_prop)
+
+# Set once the suntory blobs have been converted; everything else waits on it
+set_prop(vendor_hal_secd_default, suntory_prop)

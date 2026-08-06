@@ -17,6 +17,7 @@ vendor.display.libhdr.illuminance              u:object_r:vendor_display_color_p
 vendor.display.primary_pcc_matrix              u:object_r:vendor_display_color_prop:s0
 vendor.enable.always_on_display                u:object_r:vendor_display_always_on_prop:s0
 vendor.fingerprint.hwid                        u:object_r:vendor_fingerprint_hwid_prop:s0
+vendor.keyprovd.suntory.prov                   u:object_r:suntory_prop:s0
 vendor.sdm.wakeup                              u:object_r:vendor_sdm_prop:s0
 vendor.secd.wakeup                             u:object_r:vendor_sdm_prop:s0
 vendor.sony_spatializer.suppress               u:object_r:vendor_audio_prop:s0
